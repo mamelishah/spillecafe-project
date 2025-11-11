@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spildetaljer</title>
+    <link rel="stylesheet" href="../css/detail.css" />
+    <link rel="stylesheet" href="../css/navigationsbar.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li class="nav-item-home">
+          <a href="../index.html"
+            ><div class="back-button">
+              <img src="../assets/knapper/arrow-back.svg" alt="" /></div
+          ></a>
+        </li>
+        <li>
+          <a href="#home"
+            ><img class="logo" src="../assets/Images/logo.png" alt=""
+          /></a>
+        </li>
+      </ul>
+    </nav>
+
+    <main id="app" class="page">
+      <!-- JS genererer indholdet her -->
+    </main>
+
+    <nav class="app-nav" role="navigation" aria-label="Primær bundnavigation">
+      <div class="app-nav__tray">
+        <button class="nav-item active" aria-label="Kort">
+          <span>📍</span>
+        </button>
+        <button class="nav-item" aria-label="Favoritter"><span>❤</span></button>
+        <button class="nav-item" aria-label="Profil"><span>👤</span></button>
+      </div>
+    </nav>
+
+    <script src="../javascript/detail.js" defer></script>
+  </body>
+</html>

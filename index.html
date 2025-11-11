@@ -1,30 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/navigationsbar.css">
-    <link rel="stylesheet" href="./css/main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/navigationsbar.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/filter-row.css" />
+    <link rel="stylesheet" href="./css/games.css" />
+    <link rel="stylesheet" href="./css/overlay.css" />
     <title>Spilcaféen</title>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <ul class="nav-list">
-            <li class="nav-item-home"><a href="#home"><div class="back-button"><img src="./assets/knapper/arrow-back.svg" alt=""></div></a></li>
-            <li><a href="#home"><img class="logo" src="assets/Images/logo.png" alt=""></a></li>
-        </ul>
+      <ul class="nav-list">
+        <li class="nav-item-home">
+          <a href="#home"
+            ><div class="back-button">
+              <img src="./assets/knapper/arrow-back.svg" alt="" /></div
+          ></a>
+        </li>
+        <li>
+          <a href="#home"
+            ><img class="logo" src="assets/Images/logo.png" alt=""
+          /></a>
+        </li>
+      </ul>
     </nav>
 
+    <header class="chips">
+      <button
+        class="chip chip--location"
+        type="button"
+        aria-label="Skift lokation"
+        aria-expanded="false"
+      >
+        <span>Aarhus - Fredensgade</span>
+      </button>
 
+      <button
+        class="chip chip--filter"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+      >
+        <span>Filter</span>
+      </button>
+    </header>
 
-   <nav class="bottom-navbar">              
-            <ul class="bottom-nav-list">
-                
+    <div id="game-list" class="cards-grid">
+      <!-- Spil kort kommer her -->
+    </div>
 
-            </ul>
-   </nav>
+    <!-- Overlay for at vælge afdeling -->
+    <div id="location-overlay" class="overlay" hidden>
+      <div class="overlay-content" tabindex="-1">
+        <h2>Vælg afdeling</h2>
+        <ul class="locations">
+          <li data-location="Fredensgade">Aarhus – Fredensgade</li>
+          <li data-location="Vestergade">Aarhus – Vestergade</li>
+          <li data-location="Kolding">Kolding</li>
+          <li data-location="Aalborg">Aalborg</li>
+        </ul>
+        <button class="close-overlay">Luk</button>
+      </div>
+    </div>
 
+    <nav class="app-nav" role="navigation" aria-label="Primær bundnavigation">
+      <div class="app-nav__tray">
+        <!-- Søg -->
+        <button class="nav-item active" data-tab="search" aria-label="Søg">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6"></circle>
+            <line x1="16" y1="16" x2="21" y2="21"></line>
+          </svg>
+          <span class="sr-only">Søg</span>
+        </button>
 
-</body> 
+        <!-- Favoritter -->
+        <button class="nav-item" data-tab="favorites" aria-label="Favoritter">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 20s-7-4.3-7-10a4.1 4.1 0 0 1 7-2.6A4.1 4.1 0 0 1 19 10c0 5.7-7 10-7 10z"
+            ></path>
+          </svg>
+          <span class="sr-only">Favoritter</span>
+        </button>
+
+        <!-- Profil -->
+        <button class="nav-item" data-tab="profile" aria-label="Profil">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 20a8 8 0 0 1 16 0"></path>
+          </svg>
+          <span class="sr-only">Profil</span>
+        </button>
+      </div>
+    </nav>
+
+    <script src="./javascript/overlay.js" defer></script>
+    <script src="./javascript/nav.js" defer></script>
+    <script src="./javascript/app.js" defer></script>
+  </body>
 </html>
-

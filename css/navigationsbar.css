@@ -1,5 +1,5 @@
 :root {
-  --primary-bg-color: #CF0000
+  --primary-bg-color: #cf0000;
 }
 
 .navbar {
@@ -8,48 +8,152 @@
   padding: 0 4vw;
 }
 
-
 .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-list {
-    height: 100%;
-
+  height: 100%;
 }
 
 .logo {
-    height: 100px;
-    width: auto;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0%;
+  height: 100px;
+  width: auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0%;
 }
 
 .back-button {
-    border: 1px solid #e3e3e3;
-    border-radius: 100%;
-    padding: 5px;
-    display: flex;
+  border: 1px solid #e3e3e3;
+  border-radius: 100%;
+  padding: 5px;
+  display: flex;
 }
 
 .back-button img {
-    height: 20px;
-    width: auto;
+  height: 20px;
+  width: auto;
 }
 
-.nav-list-right {
-    display: flex;
-    gap: 15px;
+:root {
+  --nav-bg: #c0392b; /* baggrundsfarve */
+  --nav-fg: #ffffff; /* ikonfarve */
+  --nav-fg-dim: #ffffffb3; /* u-aktiv ikon */
+  --nav-active: #ffffff; /* aktiv ikon */
+  --nav-height: 64px; /* bar-højde (uden safe area) */
+  --nav-maxw: 720px; /* max bredde på bakken */
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  --ripple: rgba(255, 255, 255, 0.25);
+  --radius: 18px;
 }
 
-.nav-list-right li a svg {
-    width: 30px;
-    height: 30px;
+/* Container i bunden, fixed */
+.app-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* undgå at blokere klik uden for knapper */
+}
+
+/* Den synlige “bakke” */
+.app-nav__tray {
+  width: min(100% - 16px, var(--nav-maxw));
+  margin: 8px;
+  background: var(--nav-bg);
+  color: var(--nav-fg);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px); /* iOS safe area */
+  pointer-events: auto;
+  overflow: hidden; /* klip ripple-animation */
+}
+
+/* Knapper */
+.nav-item {
+  -webkit-tap-highlight-color: transparent;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--nav-fg-dim);
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.nav-item svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.4;
+}
+
+.nav-item.active {
+  color: var(--nav-active);
+  font-weight: 600;
+}
+
+/* Fokus- og hover-states */
+.nav-item:focus-visible {
+  box-shadow: inset 0 0 0 2px #ffffff88;
+  border-radius: 14px;
+}
+@media (hover: hover) {
+  .nav-item:hover {
+    color: var(--nav-active);
+  }
+}
+
+/* Ripple-effekt */
+.nav-item::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--ripple);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 1;
+}
+.nav-item.rippling::after {
+  width: 240px;
+  height: 240px;
+  left: var(--rx, 50%);
+  top: var(--ry, 50%);
+  transition: width 0.45s ease, height 0.45s ease, opacity 0.6s ease;
+  opacity: 0;
+}
+
+/* Skjul visuelle labels men bevar for skærmlæsere */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
