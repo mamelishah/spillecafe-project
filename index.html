@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./css/filter-row.css" />
     <link rel="stylesheet" href="./css/games.css" />
     <link rel="stylesheet" href="./css/overlay.css" />
+    <link rel="stylesheet" href="./css/filter.css" />
+
     <title>Spilcaféen</title>
   </head>
   <body>
@@ -65,6 +67,174 @@
       </div>
     </div>
 
+    <!-- FILTER OVERLAY -->
+    <div
+      id="filter-overlay"
+      class="filter-overlay"
+      hidden
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="filter-title"
+    >
+      <div class="filter-sheet" tabindex="-1">
+        <!-- HEADER -->
+        <header class="filter-header">
+          <button class="filter-back" type="button" aria-label="Luk filter">
+            <span class="filter-back-circle">
+              <span class="filter-back-chevron">❮</span>
+            </span>
+          </button>
+
+          <h2 class="filter-title" id="filter-title">Filter</h2>
+
+          <button class="filter-clear" type="button">Ryd filter</button>
+        </header>
+
+        <!-- BODY -->
+        <div class="filter-body">
+          <!-- Søg -->
+          <label class="filter-search">
+            <span class="search-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="6"></circle>
+                <line x1="16" y1="16" x2="21" y2="21"></line>
+              </svg>
+            </span>
+            <input
+              id="f-search"
+              type="search"
+              placeholder="Søg efter spil"
+              autocomplete="off"
+            />
+          </label>
+
+          <!-- Sorter efter -->
+          <button class="filter-sort-row" type="button">
+            <span class="sort-left">
+              <span class="sort-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M8 5v14M5 8l3-3 3 3M16 19V5m3 11-3 3-3-3"
+                    stroke-width="1.6"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </span>
+              <span class="sort-label">Sortere efter</span>
+            </span>
+            <span class="sort-chevron">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M7 10l5 5 5-5"
+                  stroke-width="1.7"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Kategori -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">⠿</span>
+              <span>Kategori</span>
+            </h3>
+            <div class="chip-row" id="f-category">
+              <button
+                class="chip chip--active"
+                data-value="all"
+                aria-pressed="true"
+              >
+                Alle
+              </button>
+              <button class="chip" data-value="Quiz">Quiz</button>
+              <button class="chip" data-value="Familie">Familiespil</button>
+              <button class="chip" data-value="Kortspil">Kortspil</button>
+              <button class="chip" data-value="Strategi">Strategi</button>
+              <button class="chip" data-value="Party">Party</button>
+              <button class="chip" data-value="Ordspil">Ordspil</button>
+            </div>
+          </section>
+
+          <!-- Sværhedsgrad -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">⚙️</span>
+              <span>Sværhedsgrad</span>
+            </h3>
+            <div class="chip-row" id="f-diff">
+              <button
+                class="chip chip--active"
+                data-value="all"
+                aria-pressed="true"
+              >
+                Alle
+              </button>
+              <button class="chip" data-value="Let">Let</button>
+              <button class="chip" data-value="Mellem">Middel</button>
+              <button class="chip" data-value="Svær">Svær</button>
+            </div>
+          </section>
+
+          <!-- Varighed -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">🕒</span>
+              <span>Varighed</span>
+            </h3>
+            <div class="chip-row" id="f-duration">
+              <button
+                class="chip chip--active"
+                data-value="all"
+                aria-pressed="true"
+              >
+                Alle
+              </button>
+              <button class="chip" data-value="10-30">10-30 min</button>
+              <button class="chip" data-value="30-45">30-45 min</button>
+              <button class="chip" data-value="45-60">45-60 min</button>
+              <button class="chip" data-value="60-120">45-60 min</button>
+              <button class="chip" data-value="120+">120+ min</button>
+            </div>
+          </section>
+
+          <!-- Antal personer -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">👥</span>
+              <span>Antal personer</span>
+            </h3>
+            <div class="chip-row" id="f-players">
+              <button
+                class="chip chip--active"
+                data-value="all"
+                aria-pressed="true"
+              >
+                Alle
+              </button>
+              <button class="chip" data-value="2">2</button>
+              <button class="chip" data-value="3">3</button>
+              <button class="chip" data-value="4">4</button>
+              <button class="chip" data-value="5">5</button>
+              <button class="chip" data-value="6+">6+</button>
+            </div>
+          </section>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="filter-footer">
+          <button class="filter-apply" id="f-apply" type="button">
+            Anvend filter
+          </button>
+          <p class="filter-count">VIS <span id="f-count">10</span> SPIL</p>
+        </footer>
+      </div>
+    </div>
+
     <nav class="app-nav" role="navigation" aria-label="Primær bundnavigation">
       <div class="app-nav__tray">
         <!-- Søg -->
@@ -98,6 +268,8 @@
     </nav>
 
     <script src="./javascript/overlay.js" defer></script>
+    <script src="./javascript/filter.js" defer></script>
+
     <script src="./javascript/nav.js" defer></script>
     <script src="./javascript/app.js" defer></script>
   </body>
