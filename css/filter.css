@@ -261,3 +261,21 @@
     flex: 0 0 auto !important; /* tving, så der faktisk kommer overflow */
   }
 }
+
+.chip {
+  border-radius: 999px;
+  border: 2px solid #c0392b; /* rød kant */
+  padding: 11px 20px;
+  background: #ffffff; /* hvid baggrund */
+  color: #c0392b; /* rød tekst */
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* AKTIV chip = rød baggrund + hvid tekst */
+.chip[aria-pressed="true"] {
+  background: #c0392b;
+  color: #ffffff;
+}

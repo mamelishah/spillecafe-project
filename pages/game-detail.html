@@ -3,41 +3,291 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spildetaljer</title>
-    <link rel="stylesheet" href="../css/detail.css" />
-    <link rel="stylesheet" href="../css/navigationsbar.css" />
+    <title>Spilcaféen</title>
+
+    <link rel="stylesheet" href="./css/navigationsbar.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/filter-row.css" />
+    <link rel="stylesheet" href="./css/games.css" />
+    <link rel="stylesheet" href="./css/overlay.css" />
+    <link rel="stylesheet" href="./css/filter.css" />
   </head>
+
   <body>
+    <!-- TOP NAV -->
     <nav class="navbar">
       <ul class="nav-list">
         <li class="nav-item-home">
-          <a href="../index.html"
-            ><div class="back-button">
-              <img src="../assets/knapper/arrow-back.svg" alt="" /></div
-          ></a>
+          <a href="#home">
+            <div class="back-button">
+              <img src="./assets/knapper/arrow-back.svg" alt="Tilbage" />
+            </div>
+          </a>
         </li>
         <li>
-          <a href="#home"
-            ><img class="logo" src="../assets/Images/logo.png" alt=""
-          /></a>
+          <a href="#home">
+            <img class="logo" src="./assets/Images/logo.png" alt="Spilcaféen" />
+          </a>
         </li>
       </ul>
     </nav>
 
-    <main id="app" class="page">
-      <!-- JS genererer indholdet her -->
+    <!-- CHIPS (LOKATION + FILTER) -->
+    <header class="chips">
+      <button
+        class="chip chip--location"
+        type="button"
+        aria-label="Skift lokation"
+      >
+        <span>Aarhus - Fredensgade</span>
+      </button>
+
+      <button
+        class="chip chip--filter"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+      >
+        <span>Filter</span>
+      </button>
+    </header>
+
+    <!-- LISTE MED SPIL -->
+    <main>
+      <div id="game-list" class="cards-grid">
+        <!-- JS genererer spil-kort her -->
+      </div>
     </main>
 
+    <!-- LOKATION OVERLAY -->
+    <div id="location-overlay" class="overlay" hidden>
+      <div class="overlay-content" tabindex="-1">
+        <h2>Vælg afdeling</h2>
+
+        <ul class="locations">
+          <li data-location="Fredensgade" class="location-item active">
+            Aarhus – Fredensgade
+          </li>
+          <li data-location="Vestergade" class="location-item">
+            Aarhus – Vestergade
+          </li>
+          <li data-location="Kolding" class="location-item">Kolding</li>
+          <li data-location="Aalborg" class="location-item">Aalborg</li>
+        </ul>
+
+        <button class="close-overlay" type="button">Luk</button>
+      </div>
+    </div>
+
+    <!-- FILTER OVERLAY -->
+    <div
+      id="filter-overlay"
+      class="filter-overlay"
+      hidden
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="filter-title"
+    >
+      <div class="filter-sheet" tabindex="-1">
+        <!-- HEADER -->
+        <header class="filter-header">
+          <button class="filter-back" type="button" aria-label="Luk filter">
+            <span class="filter-back-circle">
+              <span class="filter-back-chevron">❮</span>
+            </span>
+          </button>
+
+          <h2 class="filter-title" id="filter-title">Filter</h2>
+
+          <button class="filter-clear" type="button">Ryd filter</button>
+        </header>
+
+        <!-- BODY -->
+        <div class="filter-body">
+          <!-- Søg -->
+          <label class="filter-search">
+            <span class="search-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="6"></circle>
+                <line x1="16" y1="16" x2="21" y2="21"></line>
+              </svg>
+            </span>
+            <input
+              id="f-search"
+              type="search"
+              placeholder="Søg efter spil"
+              autocomplete="off"
+            />
+          </label>
+
+          <!-- Sortere efter -->
+          <button class="filter-sort-row" type="button">
+            <span class="sort-left">
+              <span class="sort-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M8 5v14M5 8l3-3 3 3M16 19V5m3 11-3 3-3-3"
+                    stroke-width="1.6"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </span>
+              <span class="sort-label">Sortere efter</span>
+            </span>
+            <span class="sort-chevron">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M7 10l5 5 5-5"
+                  stroke-width="1.7"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Kategori -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">⠿</span>
+              <span>Kategori</span>
+            </h3>
+            <div class="chip-row" id="f-category">
+              <button class="chip" data-value="all" aria-pressed="true">
+                Alle
+              </button>
+              <button class="chip" data-value="Quiz" aria-pressed="false">
+                Quiz
+              </button>
+              <button class="chip" data-value="Familie" aria-pressed="false">
+                Familiespil
+              </button>
+              <button class="chip" data-value="Kortspil" aria-pressed="false">
+                Kortspil
+              </button>
+              <button class="chip" data-value="Strategi" aria-pressed="false">
+                Strategi
+              </button>
+              <button class="chip" data-value="Party" aria-pressed="false">
+                Party
+              </button>
+              <button class="chip" data-value="Ordspil" aria-pressed="false">
+                Ordspil
+              </button>
+            </div>
+          </section>
+
+          <!-- Sværhedsgrad -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">⚙️</span>
+              <span>Sværhedsgrad</span>
+            </h3>
+            <div class="chip-row" id="f-diff">
+              <button class="chip" data-value="all" aria-pressed="true">
+                Alle
+              </button>
+              <button class="chip" data-value="Let" aria-pressed="false">
+                Let
+              </button>
+              <button class="chip" data-value="Mellem" aria-pressed="false">
+                Middel
+              </button>
+              <button class="chip" data-value="Svær" aria-pressed="false">
+                Svær
+              </button>
+            </div>
+          </section>
+
+          <!-- Varighed -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">🕒</span>
+              <span>Varighed</span>
+            </h3>
+            <div class="chip-row" id="f-duration">
+              <button class="chip" data-value="all" aria-pressed="true">
+                Alle
+              </button>
+              <button class="chip" data-value="10-30" aria-pressed="false">
+                10-30 min
+              </button>
+              <button class="chip" data-value="30-45" aria-pressed="false">
+                30-45 min
+              </button>
+              <button class="chip" data-value="45-60" aria-pressed="false">
+                45-60 min
+              </button>
+              <button class="chip" data-value="60-120" aria-pressed="false">
+                60-120 min
+              </button>
+              <button class="chip" data-value="120+" aria-pressed="false">
+                120+ min
+              </button>
+            </div>
+          </section>
+
+          <!-- Antal personer -->
+          <section class="filter-section">
+            <h3 class="filter-section-title">
+              <span class="section-icon">👥</span>
+              <span>Antal personer</span>
+            </h3>
+            <div class="chip-row" id="f-players">
+              <button class="chip" data-value="all" aria-pressed="true">
+                Alle
+              </button>
+              <button class="chip" data-value="2" aria-pressed="false">
+                2
+              </button>
+              <button class="chip" data-value="3" aria-pressed="false">
+                3
+              </button>
+              <button class="chip" data-value="4" aria-pressed="false">
+                4
+              </button>
+              <button class="chip" data-value="5" aria-pressed="false">
+                5
+              </button>
+              <button class="chip" data-value="6+" aria-pressed="false">
+                6+
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="filter-footer">
+          <button class="filter-apply" id="f-apply" type="button">
+            Anvend filter
+          </button>
+          <p class="filter-count">VIS <span id="f-count">0</span> SPIL</p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- BUND-NAVIGATION -->
     <nav class="app-nav" role="navigation" aria-label="Primær bundnavigation">
       <div class="app-nav__tray">
-        <button class="nav-item active" aria-label="Kort">
-          <span>📍</span>
+        <button class="nav-item active" data-tab="search" aria-label="Søg">
+          <span>🔍</span>
         </button>
-        <button class="nav-item" aria-label="Favoritter"><span>❤</span></button>
-        <button class="nav-item" aria-label="Profil"><span>👤</span></button>
+        <button class="nav-item" data-tab="favorites" aria-label="Favoritter">
+          <span>❤</span>
+        </button>
+        <button class="nav-item" data-tab="profile" aria-label="Profil">
+          <span>👤</span>
+        </button>
       </div>
     </nav>
 
-    <script src="../javascript/detail.js" defer></script>
+    <!-- SCRIPTS -->
+    <script src="./javascript/nav.js" defer></script>
+    <script src="./javascript/app.js" defer></script>
+    <script src="./javascript/overlay.js" defer></script>
+    <script src="./javascript/filter.js" defer></script>
   </body>
 </html>
