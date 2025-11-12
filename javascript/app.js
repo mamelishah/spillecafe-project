@@ -10,17 +10,14 @@ function initApp() {
 }
 
 async function getGames() {
-  const response = await fetch("./assets/data/games.json"); // ret sti efter behov
+  const response = await fetch("./assets/data/games.json"); 
   const raw = await response.json();
 
-  // Gem globalt
   allGames = [...raw];
   window.allGames = allGames;
 
-  // Fortæl filter.js at data er klar
   window.dispatchEvent(new Event("games:loaded"));
 
-  // Lad filter.js styre første visning (by først). Fallback: vis alle.
   if (typeof window.applyCurrentLocationFilter === "function") {
     window.applyCurrentLocationFilter();
   } else {
