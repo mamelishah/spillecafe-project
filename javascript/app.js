@@ -92,7 +92,7 @@ function displayGame(root, game) {
               <image
                 x="0" y="0" width="90" height="90"
                 preserveAspectRatio="none"
-                href="../assets/knapper/Effortgrey.svg"
+                href="./assets/knapper/Effortgrey.svg"
                 xlink:href="data:image/png;base64,PASTE_YOUR_BASE64_HERE"
               />
             </svg>
