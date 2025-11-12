@@ -172,3 +172,93 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* --- Bundnav: hård reset & låsning af ikon-centrering --- */
+.app-nav,
+.app-nav * {
+  /* Nulstil ting som detail.css kan have sat globalt */
+  box-sizing: border-box;
+}
+
+.app-nav {
+  line-height: 0; /* stop baseline-shift */
+}
+
+.app-nav__tray {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center; /* centrer cellernes indhold vertikalt */
+  justify-items: center; /* og horisontalt */
+  height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Knapperne */
+.app-nav .nav-item {
+  display: grid; /* mere stabil end flex her */
+  place-items: center; /* 1-liner for center/center */
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: var(--nav-fg-dim);
+  cursor: pointer;
+  outline: none;
+  line-height: 0; /* vigtig: fjern tekst-baseline */
+}
+
+/* Sørg for at evt. global svg-styling ikke slår igennem */
+.app-nav .nav-item svg {
+  display: block; /* fjern inline-gap */
+  width: 28px !important; /* lås størrelsen */
+  height: 28px !important;
+  min-width: 28px;
+  min-height: 28px;
+  max-width: 28px;
+  max-height: 28px;
+  vertical-align: middle; /* ekstra sikkerhed */
+  stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2.4;
+  margin: 0;
+}
+
+/* Hvis nogen globalt har sat padding/margins på <svg> elementer */
+.app-nav .nav-item svg,
+.app-nav .nav-item svg * {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Aktiv/hover/fokus bevares */
+.app-nav .nav-item.active {
+  color: var(--nav-active);
+  font-weight: 600;
+}
+@media (hover: hover) {
+  .app-nav .nav-item:hover {
+    color: var(--nav-active);
+  }
+}
+.app-nav .nav-item:focus-visible {
+  box-shadow: inset 0 0 0 2px #ffffff88;
+  border-radius: 14px;
+}
+
+/* Skærmlæser-tekst må ikke påvirke layout */
+.app-nav .sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  line-height: 0; /* sikkerhed */
+  font-size: 1px; /* undgå sideeffekter af global font-size */
+}
