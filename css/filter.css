@@ -225,7 +225,6 @@
   font-size: 13px;
 }
 
-/* ========== MOBIL (≤ 600px) = HORISONTAL SCROLL ========== */
 @media (max-width: 600px) {
   .filter-sheet {
     width: 100%;
@@ -246,35 +245,34 @@
   }
 
   .filter-overlay .chip-row {
-    flex-wrap: nowrap; /* IKKE stack på mobil */
-    overflow-x: auto; /* horisontal scroll */
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 12px;
     padding-bottom: 4px;
     -webkit-overflow-scrolling: touch;
   }
 
   .filter-overlay .chip-row::-webkit-scrollbar {
-    display: none; /* skjul scrollbar på mobil */
+    display: none;
   }
 
   .filter-overlay .chip-row .chip {
-    flex: 0 0 auto !important; /* tving, så der faktisk kommer overflow */
+    flex: 0 0 auto !important;
   }
 }
 
 .chip {
-  border-radius: 999px;
-  border: 2px solid #c0392b; /* rød kant */
+  border-radius: 10px;
+  border: 1px solid black;
   padding: 11px 20px;
-  background: #ffffff; /* hvid baggrund */
-  color: #c0392b; /* rød tekst */
+  background: #f2f0f0;
+  color: #c0392b;
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
   white-space: nowrap;
 }
 
-/* AKTIV chip = rød baggrund + hvid tekst */
 .chip[aria-pressed="true"] {
   background: #c0392b;
   color: #ffffff;
