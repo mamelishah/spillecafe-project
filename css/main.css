@@ -1,5 +1,17 @@
-*, body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+:root {
+  --app-nav-h: 72px;
+}
+
+body,
+.page {
+  padding-bottom: calc(var(--app-nav-h) + env(safe-area-inset-bottom, 0px));
+}
+
+

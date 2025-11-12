@@ -1,5 +1,5 @@
 :root {
-  --brand: #c0392b; /* Rød accentfarve */
+  --brand: #c0392b;
   --fg: #111;
   --muted: #555;
   --border: #e7e7e7;
@@ -8,17 +8,15 @@
   --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* === GRID LAYOUT === */
 #game-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 📱 To pr. række på mobil */
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   padding: 16px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* 📱 Smalle telefoner – stadig 2 kolonner */
 @media (max-width: 480px) {
   #game-list {
     grid-template-columns: repeat(2, 1fr);
@@ -32,14 +30,12 @@
   }
 }
 
-/* 🖥️ Større skærme: 4 kort */
 @media (min-width: 1100px) {
   #game-list {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* === KORT DESIGN === */
 .game-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -57,7 +53,6 @@
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
 }
 
-/* === BILLEDE === */
 .card-media {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -73,7 +68,6 @@
   border-radius: 0 0 20px 20px;
 }
 
-/* === FAVORITKNAP === */
 .fav-btn {
   position: absolute;
   top: 10px;
@@ -111,7 +105,6 @@
   opacity: 1;
 }
 
-/* === INDHOLD === */
 .card-body {
   padding: 12px 14px 16px;
 }
@@ -129,7 +122,6 @@
   font-size: 15px;
 }
 
-/* === META INFO === */
 .meta {
   list-style: none;
   margin: 0;
@@ -162,7 +154,6 @@
   stroke-width: 1.2;
 }
 
-/* === GENRE & RATING === */
 .movie-genre {
   margin-top: 8px;
   color: var(--muted);
@@ -176,7 +167,6 @@
   font-size: 14px;
 }
 
-/* === SKÆRMLÆSER === */
 .sr-only {
   position: absolute !important;
   width: 1px;

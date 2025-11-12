@@ -1,21 +1,17 @@
 "use strict";
 
-/* ========== ELEMENTER ========== */
 const locationBtn = document.querySelector(".chip--location");
 const overlay = document.querySelector("#location-overlay");
 const closeBtn = overlay.querySelector(".close-overlay");
 const locationItems = overlay.querySelectorAll(".locations li");
 
-/* ========== HJÆLP: render ud fra aktuel by ========== */
 function applyAndRenderForCurrentLocation() {
-  // Prøv at bruge filter.js’ funktion (by først)
   if (typeof window.applyCurrentLocationFilter === "function") {
     window.applyCurrentLocationFilter();
   } else if (
     Array.isArray(window.allGames) &&
     typeof window.displayGames === "function"
   ) {
-    // Fallback hvis filter.js ikke er loaded
     const locText =
       document.querySelector(".chip--location span")?.textContent?.trim() || "";
     const parts = locText.split(/–|-/);
@@ -25,14 +21,11 @@ function applyAndRenderForCurrentLocation() {
     );
     window.displayGames(list);
   }
-  // Informér evt. andre lyttere
   window.dispatchEvent(new CustomEvent("location:changed"));
 }
 
-/* ========== GENSKAB GEMT LOKATION ========== */
 const savedLocation = localStorage.getItem("selectedLocation");
 
-// Hvis der er en gemt afdeling, vis den i chippen og marker den som aktiv
 if (savedLocation) {
   document.querySelector(".chip--location span").textContent = savedLocation;
   locationItems.forEach((li) => {
@@ -40,19 +33,15 @@ if (savedLocation) {
   });
 }
 
-/* Når spil-data er loaded første gang, rendér efter aktuel by */
 window.addEventListener("games:loaded", applyAndRenderForCurrentLocation);
 
-/* Kald også med det samme – hvis data allerede er klar, sker der noget; ellers sker der ikke noget skidt */
 applyAndRenderForCurrentLocation();
 
-/* ========== ÅBN OVERLAY ========== */
 locationBtn.addEventListener("click", () => {
   overlay.hidden = false;
   locationBtn.setAttribute("aria-expanded", "true");
   document.body.style.overflow = "hidden";
 
-  // Sørg for at den aktuelle er markeret, når overlay åbnes
   const current =
     document.querySelector(".chip--location span")?.textContent.trim() || "";
   locationItems.forEach((li) => {
@@ -62,7 +51,6 @@ locationBtn.addEventListener("click", () => {
   overlay.querySelector(".overlay-content")?.focus();
 });
 
-/* ========== LUK OVERLAY ========== */
 function closeOverlay() {
   overlay.hidden = true;
   locationBtn.setAttribute("aria-expanded", "false");
@@ -80,20 +68,16 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !overlay.hidden) closeOverlay();
 });
 
-/* ========== VÆLG LOKATION ========== */
 locationItems.forEach((item) => {
   item.addEventListener("click", () => {
     const selectedName = item.textContent.trim();
 
-    // Marker valgt
     locationItems.forEach((li) => li.classList.remove("active"));
     item.classList.add("active");
 
-    // Opdater chip + gem
     document.querySelector(".chip--location span").textContent = selectedName;
     localStorage.setItem("selectedLocation", selectedName);
 
-    // Luk + filtrér nu ud fra by
     closeOverlay();
     applyAndRenderForCurrentLocation();
   });

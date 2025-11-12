@@ -53,7 +53,6 @@
       <!-- Spil kort kommer her -->
     </div>
 
-    <!-- Overlay for at vælge afdeling -->
     <div id="location-overlay" class="overlay" hidden>
       <div class="overlay-content" tabindex="-1">
         <h2>Vælg afdeling</h2>
@@ -67,7 +66,6 @@
       </div>
     </div>
 
-    <!-- FILTER OVERLAY -->
     <div
       id="filter-overlay"
       class="filter-overlay"
@@ -77,7 +75,6 @@
       aria-labelledby="filter-title"
     >
       <div class="filter-sheet" tabindex="-1">
-        <!-- HEADER -->
         <header class="filter-header">
           <button class="filter-back" type="button" aria-label="Luk filter">
             <span class="filter-back-circle">
@@ -90,9 +87,7 @@
           <button class="filter-clear" type="button">Ryd filter</button>
         </header>
 
-        <!-- BODY -->
         <div class="filter-body">
-          <!-- Søg -->
           <label class="filter-search">
             <span class="search-icon">
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -108,36 +103,98 @@
             />
           </label>
 
-          <!-- Sorter efter -->
-          <button class="filter-sort-row" type="button">
-            <span class="sort-left">
-              <span class="sort-icon">
+         
+          <div class="filter-sort-wrap">
+            <button
+              class="filter-sort-row"
+              type="button"
+              id="f-sort-btn"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-controls="f-sort-popover"
+            >
+              <span class="sort-left">
+                <span class="sort-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M8 5v14M5 8l3-3 3 3M16 19V5m3 11-3 3-3-3"
+                      stroke-width="1.6"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </span>
+                <span class="sort-label"
+                  ><span id="f-sort-label">Sorter efter</span></span
+                >
+              </span>
+              <span class="sort-chevron">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path
-                    d="M8 5v14M5 8l3-3 3 3M16 19V5m3 11-3 3-3-3"
-                    stroke-width="1.6"
+                    d="M7 10l5 5 5-5"
+                    stroke-width="1.7"
                     fill="none"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   ></path>
                 </svg>
               </span>
-              <span class="sort-label">Sortere efter</span>
-            </span>
-            <span class="sort-chevron">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M7 10l5 5 5-5"
-                  stroke-width="1.7"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </span>
-          </button>
+            </button>
 
-          <!-- Kategori -->
+            <div id="f-sort-popover" class="sort-popover" role="listbox" hidden>
+              <button class="sort-opt" role="option" data-value="title:asc">
+                Titel (A–Å)
+              </button>
+              <button class="sort-opt" role="option" data-value="title:desc">
+                Titel (Å–A)
+              </button>
+              <hr />
+              <button class="sort-opt" role="option" data-value="playtime:asc">
+                Spilletid (kort → lang)
+              </button>
+              <button class="sort-opt" role="option" data-value="playtime:desc">
+                Spilletid (lang → kort)
+              </button>
+              <hr />
+              <button class="sort-opt" role="option" data-value="rating:desc">
+                Rating (høj → lav)
+              </button>
+              <button class="sort-opt" role="option" data-value="rating:asc">
+                Rating (lav → høj)
+              </button>
+              <hr />
+              <button class="sort-opt" role="option" data-value="age:asc">
+                Alder (lav → høj)
+              </button>
+              <button class="sort-opt" role="option" data-value="age:desc">
+                Alder (høj → lav)
+              </button>
+              <hr />
+              <button class="sort-opt" role="option" data-value="players:asc">
+                Spillere (min → max)
+              </button>
+              <button class="sort-opt" role="option" data-value="players:desc">
+                Spillere (max → min)
+              </button>
+              <hr />
+              <button
+                class="sort-opt"
+                role="option"
+                data-value="difficulty:asc"
+              >
+                Sværhedsgrad (Let → Svær)
+              </button>
+              <button
+                class="sort-opt"
+                role="option"
+                data-value="difficulty:desc"
+              >
+                Sværhedsgrad (Svær → Let)
+              </button>
+            </div>
+          </div>
+
           <section class="filter-section">
             <h3 class="filter-section-title">
               <span class="section-icon">⠿</span>
@@ -160,7 +217,6 @@
             </div>
           </section>
 
-          <!-- Sværhedsgrad -->
           <section class="filter-section">
             <h3 class="filter-section-title">
               <span class="section-icon">⚙️</span>
@@ -180,7 +236,6 @@
             </div>
           </section>
 
-          <!-- Varighed -->
           <section class="filter-section">
             <h3 class="filter-section-title">
               <span class="section-icon">🕒</span>
@@ -202,7 +257,6 @@
             </div>
           </section>
 
-          <!-- Antal personer -->
           <section class="filter-section">
             <h3 class="filter-section-title">
               <span class="section-icon">👥</span>
@@ -225,7 +279,6 @@
           </section>
         </div>
 
-        <!-- FOOTER -->
         <footer class="filter-footer">
           <button class="filter-apply" id="f-apply" type="button">
             Anvend filter
@@ -237,7 +290,6 @@
 
     <nav class="app-nav" role="navigation" aria-label="Primær bundnavigation">
       <div class="app-nav__tray">
-        <!-- Søg -->
         <button class="nav-item active" data-tab="search" aria-label="Søg">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="6"></circle>
@@ -246,7 +298,6 @@
           <span class="sr-only">Søg</span>
         </button>
 
-        <!-- Favoritter -->
         <button class="nav-item" data-tab="favorites" aria-label="Favoritter">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path
@@ -256,7 +307,6 @@
           <span class="sr-only">Favoritter</span>
         </button>
 
-        <!-- Profil -->
         <button class="nav-item" data-tab="profile" aria-label="Profil">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="8" r="4"></circle>

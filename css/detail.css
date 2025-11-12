@@ -6,7 +6,6 @@
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* ---------- BASIC ---------- */
 * {
   box-sizing: border-box;
 }
@@ -18,7 +17,6 @@ body {
   color: #222;
 }
 
-/* ---------- TOPBAR ---------- */
 .topbar {
   background: var(--brand);
   color: white;
@@ -43,7 +41,6 @@ body {
   height: 34px;
 }
 
-/* ---------- MAIN CARD ---------- */
 .detail-card {
   background: white;
   border-radius: var(--radius);
@@ -62,7 +59,6 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-/* ---------- RIBBON ---------- */
 .placement-ribbon {
   position: absolute;
   top: 0;
@@ -70,15 +66,6 @@ body {
   width: 110px;
   height: 110px;
   overflow: hidden;
-}
-
-.placement-ribbon::before {
-  content: "";
-  position: absolute;
-  width: 180px;
-  height: 34px;
-  background: var(--brand);
-  transform: translate(-26px, 22px) rotate(-45deg);
 }
 
 .placement-ribbon span {
@@ -93,7 +80,6 @@ body {
   text-transform: uppercase;
 }
 
-/* ---------- CARD BODY ---------- */
 .detail-body {
   padding: 1rem;
 }
@@ -125,7 +111,6 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* ---------- PLACERING ---------- */
 .placement-row {
   display: flex;
   align-items: center;
@@ -155,7 +140,6 @@ body {
   font-size: 1rem;
 }
 
-/* ---------- RECOMMENDATION ICONS ---------- */
 .reco {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -208,7 +192,6 @@ body {
   color: #444;
 }
 
-/* ---------- BUNDNAVIGATION ---------- */
 .app-nav {
   position: fixed;
   bottom: 0;

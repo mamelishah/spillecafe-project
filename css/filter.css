@@ -7,7 +7,6 @@
   --radius-pill: 24px;
 }
 
-/* ========== OVERLAY ========== */
 .filter-overlay {
   position: fixed;
   inset: 0;
@@ -22,7 +21,6 @@
   display: none;
 }
 
-/* Hvid “kort” i midten */
 .filter-sheet {
   width: min(720px, 94vw);
   max-height: 92vh;
@@ -33,7 +31,6 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
-/* ========== HEADER ========== */
 .filter-header {
   display: grid;
   grid-template-columns: 56px 1fr auto;
@@ -79,14 +76,13 @@
   font-size: 14px;
 }
 
-/* ========== BODY ========== */
 .filter-body {
   padding: 12px 20px 10px;
   overflow: auto;
   border-top: 1px solid #f3f3f3;
 }
 
-/* SØGEFELT */
+
 .filter-search {
   display: flex;
   align-items: center;
@@ -112,7 +108,6 @@
   font-size: 16px;
 }
 
-/* SORTERE EFTER-LINJE */
 .filter-sort-row {
   border: none;
   background: transparent;
@@ -149,7 +144,6 @@
   fill: none;
 }
 
-/* SEKTIONER */
 .filter-section {
   margin-top: 10px;
 }
@@ -167,10 +161,10 @@
   font-size: 18px;
 }
 
-/* ========== CHIPS (DEFAULT = TABLET + DESKTOP: STACK) ========== */
+
 .filter-overlay .chip-row {
   display: flex;
-  flex-wrap: wrap; /* stack / flere rækker på større skærme */
+  flex-wrap: wrap; 
   gap: 12px 14px;
   overflow-x: visible;
   padding-bottom: 0;
@@ -187,7 +181,7 @@
   font-size: 15px;
   cursor: pointer;
   white-space: nowrap;
-  flex: 0 0 auto; /* vigtig, så de kan scrolles på mobil */
+  flex: 0 0 auto; 
 }
 
 .filter-overlay .chip-row .chip.chip--active,
@@ -196,7 +190,6 @@
   color: #ffffff;
 }
 
-/* ========== FOOTER ========== */
 .filter-footer {
   padding: 16px 20px 20px;
   border-top: 1px solid #f0f0f0;
@@ -276,4 +269,52 @@
 .chip[aria-pressed="true"] {
   background: #c0392b;
   color: #ffffff;
+}
+
+.filter-sort-wrap {
+  position: relative;
+}
+
+.sort-popover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  min-width: 260px;
+  margin-top: 6px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.sort-popover[hidden] {
+  display: none;
+}
+
+.sort-popover .sort-opt {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort-popover .sort-opt:hover {
+  background: #f4f4f4;
+}
+
+.sort-popover hr {
+  border: 0;
+  border-top: 1px solid #efefef;
+  margin: 6px 0;
+}
+
+.filter-sort-row[aria-expanded="true"] .sort-chevron svg {
+  transform: rotate(180deg);
+  transition: transform 0.15s ease;
 }

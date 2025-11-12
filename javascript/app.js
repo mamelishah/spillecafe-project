@@ -136,6 +136,7 @@ function formatRange(min, max, suffix = "") {
 }
 
 function showGameDetails(game) {
-  // Åbn detaljesiden med ID som query parameter
-  window.location.href = `./pages/game-detail.html?id=${game.id}`;
+  const url = new URL("pages/game-detail.html", window.location.href);
+  url.searchParams.set("id", game.id);
+  window.location.href = url.toString();
 }

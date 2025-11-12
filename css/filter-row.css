@@ -1,13 +1,12 @@
 :root {
-  --brand: #c0392b; /* rød som i dit UI */
-  --bg: #f3f1f1; /* lys grå pill-baggrund */
-  --border: #d9d6d6; /* subtil kant */
+  --brand: #c0392b;
+  --bg: #f3f1f1;
+  --border: #d9d6d6;
   --shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
-  --radius: 16px; /* ydre radius */
-  --inner-radius: 14px; /* indre (for at matche kant) */
+  --radius: 16px;
+  --inner-radius: 14px;
 }
 
-/* Wrapper */
 .chips {
   display: flex;
   align-items: center;
@@ -18,7 +17,6 @@
   margin: 0 auto;
 }
 
-/* Base chip */
 .chip {
   -webkit-tap-highlight-color: transparent;
   appearance: none;
@@ -35,10 +33,9 @@
   outline: none;
 }
 
-/* Tekststørrelser og breddeadfærd */
 .chip--location {
   font-size: clamp(18px, 2.2vw, 24px);
-  flex: 1; /* fylder til venstre */
+  flex: 1;
   text-align: left;
   border-radius: 24px;
   padding: 14px 20px;
@@ -46,12 +43,11 @@
 
 .chip--filter {
   font-size: 16px;
-  white-space: nowrap; /* hold “Filter” på en linje */
+  white-space: nowrap;
   border-radius: 16px;
   padding: 12px 18px;
 }
 
-/* Interaktion */
 .chip:hover {
   border-color: #cfcaca;
 }
@@ -64,7 +60,6 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 30%, white);
 }
 
-/* Mørk tilstand (valgfrit) */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #2a2a2a;

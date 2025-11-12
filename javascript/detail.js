@@ -8,9 +8,8 @@ async function initDetail() {
   if (!id) return renderError("Ingen spil-id angivet i URL’en.");
 
   try {
-    const response = await fetch("../assets/data/games.json");
-    const games = await response.json();
-    const game = games.find((g) => String(g.id) === id);
+    const games = await fetchGamesWithFallback();
+    const game = games.find((g) => String(g.id) === String(id));
     if (!game) return renderError("Spil ikke fundet.");
 
     renderGameDetail(game);
@@ -20,64 +19,109 @@ async function initDetail() {
   }
 }
 
+async function fetchGamesWithFallback() {
+  const urls = ["../assets/data/games.json", "./assets/data/games.json"];
+  let lastErr;
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr || new Error("Ukendt fetch-fejl");
+}
+
 function renderError(msg) {
-  document.querySelector("#app").innerHTML = `<p>${msg}</p>`;
+  document.querySelector("#app").innerHTML = `
+    <p>${msg}</p>
+    <p><a href="../index.html">Tilbage</a></p>
+  `;
 }
 
 function renderGameDetail(game) {
   const placementCode = (game.shelf || game.location || "").trim();
-  const ribbonText = placementCode.toUpperCase() || "—";
-  const rowText = placementCode.toLowerCase() || "—";
+  const ribbonText = placementCode ? placementCode.toUpperCase() : "—";
+  const rowText = placementCode ? placementCode.toLowerCase() : "—";
+
+  const pMin = game.players?.min ?? null;
+  const pMax = game.players?.max ?? null;
+  const playersText = formatPlayers(pMin, pMax); // ← viser “4” når min==max
 
   const html = `
     <article class="detail-card">
       <div class="media">
-        <img src="${game.image}" alt="${game.title}" />
-        <div class="placement-ribbon"><span>${ribbonText}</span></div>
+        <img src="${game.image}" alt="${escapeHtml(
+    game.title
+  )}" loading="lazy" />
+        <div class="placement-ribbon"><span>${escapeHtml(
+          ribbonText
+        )}</span></div>
       </div>
 
       <div class="detail-body">
         <div class="title-row">
-          <h1 class="title">${game.title}</h1>
+          <h1 class="title">${escapeHtml(game.title)}</h1>
           <div class="like-pill"><span>❤</span>${Math.floor(
-            game.rating * 35
+            (game.rating || 0) * 35
           )}</div>
         </div>
 
         <div class="placement-row">
-         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fffff"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill=""><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
           <span class="label">Placering:</span>
-          <span class="value">${rowText}</span>
+          <span class="value">${escapeHtml(rowText)}</span>
         </div>
 
         <h3>Anbefaling for dette spil</h3>
         <div class="reco">
-          <div><div class="icon">👥</div><div class="caption">${
-            game.players.min
-          }-${game.players.max}</div></div>
-          <div><div class="icon">🏃</div><div class="caption">${
-            game.difficulty
-          }</div></div>
+          <div><div class="icon">👥</div><div class="caption">${playersText}</div></div>
+          <div><div class="icon">🏃</div><div class="caption">${escapeHtml(
+            game.difficulty || "—"
+          )}</div></div>
           <div><div class="icon">🕒</div><div class="caption">${
-            game.playtime
-          } min</div></div>
-          <div><div class="icon">📅</div><div class="caption">+${
-            game.age
-          } år</div></div>
+            Number.isFinite(game.playtime) ? game.playtime + " min" : "—"
+          }</div></div>
+          <div><div class="icon">📅</div><div class="caption">${
+            Number.isFinite(game.age) ? `+${game.age} år` : "—"
+          }</div></div>
         </div>
 
         <details class="accord" open>
           <summary>🧾 Beskrivelse</summary>
-          <p>${game.description}</p>
+          <p>${escapeHtml(game.description || "—")}</p>
         </details>
 
         <details class="accord">
           <summary>📜 Regler</summary>
-          <p>${game.rules}</p>
+          <p>${escapeHtml(game.rules || "—")}</p>
         </details>
       </div>
     </article>
   `;
 
   document.querySelector("#app").innerHTML = html;
+}
+
+function formatPlayers(min, max) {
+  const hasMin = Number.isFinite(min);
+  const hasMax = Number.isFinite(max);
+
+  if (!hasMin && !hasMax) return "—";
+  if (hasMin && hasMax) {
+    return min === max ? String(min) : `${min} - ${max}`;
+  }
+  if (hasMin) return String(min);
+  return String(max);
+}
+
+function escapeHtml(str = "") {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }

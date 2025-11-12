@@ -58,7 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Anvend filter
   applyBtn?.addEventListener("click", () => {
     const list = filterGames(window.allGames || []);
-    window.displayGames?.(list);
+    const sorted = sortGames(list, currentSort);
+    window.displayGames?.(sorted);
     closeOverlay();
   });
 
@@ -280,3 +281,108 @@ document.addEventListener("DOMContentLoaded", () => {
     countEl.textContent = String(filtered.length);
   }
 });
+
+/* ===========================
+     SORTERING (dropdown)
+  =========================== */
+const sortBtn = document.getElementById("f-sort-btn");
+const sortPopover = document.getElementById("f-sort-popover");
+const sortLabel = document.getElementById("f-sort-label");
+
+// Standard sortering (kan du ændre, hvis du vil)
+let currentSort = { field: "title", dir: "asc", label: "Titel (A–Å)" };
+
+// Toggle popover
+sortBtn?.addEventListener("click", (e) => {
+  const isOpen = sortBtn.getAttribute("aria-expanded") === "true";
+  sortBtn.setAttribute("aria-expanded", String(!isOpen));
+  if (isOpen) {
+    sortPopover.hidden = true;
+  } else {
+    sortPopover.hidden = false;
+  }
+});
+
+// Luk popover ved klik udenfor
+document.addEventListener("click", (e) => {
+  if (!sortPopover || sortPopover.hidden) return;
+  const inside =
+    e.target === sortPopover ||
+    sortPopover.contains(e.target) ||
+    e.target === sortBtn ||
+    sortBtn.contains(e.target);
+  if (!inside) {
+    sortPopover.hidden = true;
+    sortBtn.setAttribute("aria-expanded", "false");
+  }
+});
+
+// Vælg en sorteringsmulighed
+sortPopover?.addEventListener("click", (e) => {
+  const opt = e.target.closest(".sort-opt");
+  if (!opt) return;
+
+  const val = opt.dataset.value || ""; // "field:dir"
+  const [field, dir] = val.split(":");
+  const label = opt.textContent.trim();
+
+  currentSort = { field, dir, label };
+  if (sortLabel) sortLabel.textContent = label;
+
+  // Luk popover
+  sortPopover.hidden = true;
+  sortBtn.setAttribute("aria-expanded", "false");
+
+  // Opdater tælleren, så det matcher, hvad der kommer efter sortering
+  updateCount();
+});
+
+// Sorteringsfunktion
+function sortGames(list, sort) {
+  const dirMul = sort?.dir === "desc" ? -1 : 1;
+
+  // til sværhedsgrad-ordre
+  const diffOrder = { let: 1, mellem: 2, middel: 2, svær: 3 };
+
+  return [...list].sort((a, b) => {
+    switch (sort?.field) {
+      case "title": {
+        const aa = (a.title || "").toLocaleLowerCase();
+        const bb = (b.title || "").toLocaleLowerCase();
+        return aa.localeCompare(bb, "da") * dirMul;
+      }
+      case "playtime": {
+        const aa = Number(a.playtime) || 0;
+        const bb = Number(b.playtime) || 0;
+        return (aa - bb) * dirMul;
+      }
+      case "rating": {
+        const aa = Number(a.rating) || 0;
+        const bb = Number(b.rating) || 0;
+        return (aa - bb) * dirMul;
+      }
+      case "age": {
+        const aa = Number(a.age) || 0;
+        const bb = Number(b.age) || 0;
+        return (aa - bb) * dirMul;
+      }
+      case "players": {
+        const amin = a.players?.min ?? 0;
+        const bmin = b.players?.min ?? 0;
+        if (amin !== bmin) return (amin - bmin) * dirMul;
+        const amax = a.players?.max ?? 0;
+        const bmax = b.players?.max ?? 0;
+        return (amax - bmax) * dirMul;
+      }
+      case "difficulty": {
+        const ad = (a.difficulty || "").toLowerCase();
+        const bd = (b.difficulty || "").toLowerCase();
+        const av = diffOrder[ad] ?? 99;
+        const bv = diffOrder[bd] ?? 99;
+        return (av - bv) * dirMul;
+      }
+      default:
+        return 0;
+    }
+  });
+}

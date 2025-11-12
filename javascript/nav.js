@@ -1,3 +1,4 @@
+
 // Håndter aktiv tilstand og ripple-animation
 const items = document.querySelectorAll(".nav-item");
 
@@ -33,5 +34,4 @@ items.forEach((btn) => {
   });
 });
 
-// Eksempel på at lytte efter faneskift i din app:
-// window.addEventListener('nav:change', (e)=> console.log('Aktiv fane:', e.detail.tab));
+
